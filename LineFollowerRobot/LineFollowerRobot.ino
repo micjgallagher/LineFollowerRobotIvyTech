@@ -1,6 +1,9 @@
+// Speeds
+#define MOTOR_SPEED 180
+
+// Pin Numbers
 #define IR_SENSOR_RIGHT 11
 #define IR_SENSOR_LEFT 12
-#define MOTOR_SPEED 180
 
 //Right motor
 int enableRightMotor=6;
@@ -19,7 +22,7 @@ void setup()
   //For that we need to increase the frequency of analogWrite.
   //Below line is important to change the frequency of PWM signal on pin D5 and D6
   //Because of this, motor runs in controlled manner (lower speed) at high PWM value.
-  //This sets frequecny as 7812.5 hz.
+  //This sets frequency as 7812.5 hz.
   TCCR0B = TCCR0B & B11111000 | B00000010 ;
   
   // put your setup code here, to run once:
