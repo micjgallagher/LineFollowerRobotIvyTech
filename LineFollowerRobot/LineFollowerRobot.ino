@@ -23,7 +23,7 @@ void setup()
   //Below line is important to change the frequency of PWM signal on pin D5 and D6
   //Because of this, motor runs in controlled manner (lower speed) at high PWM value.
   //This sets frequency as 7812.5 hz.
-  TCCR0B = TCCR0B & B11111000 | B00000010 ;
+  TCCR0B = TCCR0B & B11111000 | B00000010;
   
   // put your setup code here, to run once:
   pinMode(enableRightMotor, OUTPUT);
@@ -36,7 +36,7 @@ void setup()
 
   pinMode(IR_SENSOR_RIGHT, INPUT);
   pinMode(IR_SENSOR_LEFT, INPUT);
-  rotateMotor(0,0);   
+  rotateMotors(0,0);   
 }
 
 
@@ -49,27 +49,33 @@ void loop()
   //If none of the sensors detects black line, then go straight
   if (rightIRSensorValue == LOW && leftIRSensorValue == LOW)
   {
-    rotateMotor(MOTOR_SPEED, MOTOR_SPEED);
+    rotateMotors(MOTOR_SPEED, MOTOR_SPEED);
   }
   //If right sensor detects black line, then turn right
   else if (rightIRSensorValue == HIGH && leftIRSensorValue == LOW )
   {
-      rotateMotor(-MOTOR_SPEED, MOTOR_SPEED); 
+      rotateMotors(-MOTOR_SPEED, MOTOR_SPEED); 
   }
   //If left sensor detects black line, then turn left  
   else if (rightIRSensorValue == LOW && leftIRSensorValue == HIGH )
   {
-      rotateMotor(MOTOR_SPEED, -MOTOR_SPEED); 
+      rotateMotors(MOTOR_SPEED, -MOTOR_SPEED); 
   } 
   //If both the sensors detect black line, then stop 
   else 
   {
-    rotateMotor(0, 0);
+    rotateMotors(0, 0);
   }
 }
 
 
-void rotateMotor(int rightMotorSpeed, int leftMotorSpeed)
+void rotateMotors(int rightMotorSpeed, int leftMotorSpeed)
+{
+    rotateMotor(rightMotorSpeed, rightMotorPin1, rightMotorPin2, enableRightMotor);
+    rotateMotor(leftMotorSpeed, leftMotorPin1, lefttMotorPin2, enableLeftMotor);
+}
+
+void rotateMotor(int speed, int pin1, int pin2, int enable)
 {
   
   if (rightMotorSpeed < 0)
@@ -88,21 +94,5 @@ void rotateMotor(int rightMotorSpeed, int leftMotorSpeed)
     digitalWrite(rightMotorPin2,LOW);      
   }
 
-  if (leftMotorSpeed < 0)
-  {
-    digitalWrite(leftMotorPin1,LOW);
-    digitalWrite(leftMotorPin2,HIGH);    
-  }
-  else if (leftMotorSpeed > 0)
-  {
-    digitalWrite(leftMotorPin1,HIGH);
-    digitalWrite(leftMotorPin2,LOW);      
-  }
-  else 
-  {
-    digitalWrite(leftMotorPin1,LOW);
-    digitalWrite(leftMotorPin2,LOW);      
-  }
-  analogWrite(enableRightMotor, abs(rightMotorSpeed));
-  analogWrite(enableLeftMotor, abs(leftMotorSpeed));    
+  analogWrite(enable, abs(speed));
 }
