@@ -17,6 +17,7 @@ int leftMotorPin2=10;
 
 void setup()
 {
+  Serial.begin(9600); 
   //The problem with TT gear motors is that, at very low pwm value it does not even rotate.
   //If we increase the PWM value then it rotates faster and our robot is not controlled in that speed and goes out of line.
   //For that we need to increase the frequency of analogWrite.
@@ -77,7 +78,11 @@ void rotateMotors(int rightMotorSpeed, int leftMotorSpeed)
 
 void rotateMotor(int speed, int pin1, int pin2, int enable)
 {
-  
+  Serial.print("Turning motor with enable pin ");
+  Serial.print(enable, DEC);
+  Serial.print(" with speed ");
+  Serial.print(speed, DEC);
+  Serial.println();
   if (rightMotorSpeed < 0)
   {
     digitalWrite(rightMotorPin1,LOW);
