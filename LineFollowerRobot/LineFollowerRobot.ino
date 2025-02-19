@@ -13,10 +13,15 @@ int enableRightMotor=6;
 int rightMotorPin1=7;
 int rightMotorPin2=8;
 
+int rightMotorSpeed=MOTOR_SPEED;
+
 //Left motor
 int enableLeftMotor=5;
 int leftMotorPin1=9;
 int leftMotorPin2=10;
+
+int leftMotorSpeed=MOTOR_SPEED;
+
 
 void setup()
 {
@@ -50,6 +55,13 @@ void loop()
   int rightIRSensorValue = digitalRead(IR_SENSOR_RIGHT);
   int leftIRSensorValue = digitalRead(IR_SENSOR_LEFT);
 
+  if (DEBUG) {
+    Serial.print("rightIRSensorValue = ");
+    Serial.println(rightIRSensorValue, DEC);
+    Serial.print("leftIRSensorValue = ");
+    Serial.println(leftIRSensorValue, DEC);
+  }
+
   //If none of the sensors detects black line, then go straight
   if (rightIRSensorValue == LOW && leftIRSensorValue == LOW)
   {
@@ -76,7 +88,7 @@ void loop()
 void rotateMotors(int rightMotorSpeed, int leftMotorSpeed)
 {
     rotateMotor(rightMotorSpeed, rightMotorPin1, rightMotorPin2, enableRightMotor);
-    rotateMotor(leftMotorSpeed, leftMotorPin1, lefttMotorPin2, enableLeftMotor);
+    rotateMotor(leftMotorSpeed, leftMotorPin1, leftMotorPin2, enableLeftMotor);
 }
 
 void rotateMotor(int speed, int pin1, int pin2, int enable)
