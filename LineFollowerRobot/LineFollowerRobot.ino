@@ -1,5 +1,5 @@
 // Options
-#define DEBUG true
+#include "Config.h"
 
 // Speeds
 #define MOTOR_SPEED -180 // Reverse sign as needed.
@@ -33,7 +33,7 @@ void setup()
   //Because of this, motor runs in controlled manner (lower speed) at high PWM value.
   //This sets frequency as 7812.5 hz.
   //TCCR0B = TCCR0B & B11111000 | B00000010;
-  
+
   // put your setup code here, to run once:
   pinMode(enableRightMotor, OUTPUT);
   pinMode(rightMotorPin1, OUTPUT);
@@ -55,11 +55,16 @@ void loop()
   int rightIRSensorValue = digitalRead(IR_SENSOR_RIGHT);
   int leftIRSensorValue = digitalRead(IR_SENSOR_LEFT);
 
-  if (DEBUG) {
+  if (DEBUG_PRINT) {
     Serial.print("rightIRSensorValue = ");
     Serial.println(rightIRSensorValue, DEC);
     Serial.print("leftIRSensorValue = ");
     Serial.println(leftIRSensorValue, DEC);
+  }
+
+  if (DEBUG_MOTORS) {
+      rotateMotors(MOTOR_SPEED, MOTOR_SPEED);
+      return;
   }
 
   //If none of the sensors detects black line, then go straight
@@ -93,7 +98,7 @@ void rotateMotors(int rightMotorSpeed, int leftMotorSpeed)
 
 void rotateMotor(int speed, int pin1, int pin2, int enable)
 {
-  if (DEBUG) {
+  if (DEBUG_PRINT) {
     Serial.print("Turning motor with enable pin ");
     Serial.print(enable, DEC);
     Serial.print(" with speed ");
