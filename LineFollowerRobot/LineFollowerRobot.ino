@@ -99,27 +99,31 @@ void rotateMotors(int rightMotorSpeed, int leftMotorSpeed)
 void rotateMotor(int speed, int pin1, int pin2, int enable)
 {
   if (DEBUG_PRINT) {
-    Serial.print("Turning motor with enable pin ");
+    Serial.print("Turning motor with pin1 = ");
+    Serial.print(pin1, DEC);
+    Serial.print(" , pin2 = ");
+    Serial.print(pin2, DEC);
+    Serial.print(" , and enable pin = ");
     Serial.print(enable, DEC);
-    Serial.print(" with speed ");
+    Serial.print(" with speed = ");
     Serial.print(speed, DEC);
     Serial.println();
   }
 
-  if (rightMotorSpeed < 0)
+  if (speed < 0)
   {
-    digitalWrite(rightMotorPin1,LOW);
-    digitalWrite(rightMotorPin2,HIGH);    
+    digitalWrite(pin1,LOW);
+    digitalWrite(pin2,HIGH);    
   }
-  else if (rightMotorSpeed > 0)
+  else if (speed > 0)
   {
-    digitalWrite(rightMotorPin1,HIGH);
-    digitalWrite(rightMotorPin2,LOW);      
+    digitalWrite(pin1,HIGH);
+    digitalWrite(pin2,LOW);      
   }
   else
   {
-    digitalWrite(rightMotorPin1,LOW);
-    digitalWrite(rightMotorPin2,LOW);      
+    digitalWrite(pin1,LOW);
+    digitalWrite(pin2,LOW);      
   }
 
   analogWrite(enable, abs(speed));
