@@ -1,8 +1,8 @@
 // Options
-#define DEBUG true
+#include "Config.h"
 
 // Speeds
-#define MOTOR_SPEED -180 // Reverse sign as needed.
+#define MOTOR_SPEED 180 // Reverse sign as needed.
 
 // Pin Numbers
 #define IR_SENSOR_RIGHT 11
@@ -33,7 +33,7 @@ void setup()
   //Because of this, motor runs in controlled manner (lower speed) at high PWM value.
   //This sets frequency as 7812.5 hz.
   //TCCR0B = TCCR0B & B11111000 | B00000010;
-  
+
   // put your setup code here, to run once:
   pinMode(enableRightMotor, OUTPUT);
   pinMode(rightMotorPin1, OUTPUT);
@@ -55,11 +55,17 @@ void loop()
   int rightIRSensorValue = digitalRead(IR_SENSOR_RIGHT);
   int leftIRSensorValue = digitalRead(IR_SENSOR_LEFT);
 
-  if (DEBUG) {
+  if (DEBUG_PRINT) {
     Serial.print("rightIRSensorValue = ");
     Serial.println(rightIRSensorValue, DEC);
     Serial.print("leftIRSensorValue = ");
-    Serial.println(leftIRSensorValue, DEC);
+    Serial.print(leftIRSensorValue, DEC);
+    Serial.println();
+  }
+
+  if (DEBUG_MOTORS) {
+      rotateMotors(MOTOR_SPEED, MOTOR_SPEED);
+      return;
   }
 
   //If none of the sensors detects black line, then go straight
@@ -93,28 +99,32 @@ void rotateMotors(int rightMotorSpeed, int leftMotorSpeed)
 
 void rotateMotor(int speed, int pin1, int pin2, int enable)
 {
-  if (DEBUG) {
-    Serial.print("Turning motor with enable pin ");
+  if (DEBUG_PRINT) {
+    Serial.print("Turning motor with pin1 = ");
+    Serial.print(pin1, DEC);
+    Serial.print(" , pin2 = ");
+    Serial.print(pin2, DEC);
+    Serial.print(" , and enable pin = ");
     Serial.print(enable, DEC);
-    Serial.print(" with speed ");
+    Serial.print(" with speed = ");
     Serial.print(speed, DEC);
     Serial.println();
   }
 
-  if (rightMotorSpeed < 0)
+  if (speed < 0)
   {
-    digitalWrite(rightMotorPin1,LOW);
-    digitalWrite(rightMotorPin2,HIGH);    
+    digitalWrite(pin1,LOW);
+    digitalWrite(pin2,HIGH);    
   }
-  else if (rightMotorSpeed > 0)
+  else if (speed > 0)
   {
-    digitalWrite(rightMotorPin1,HIGH);
-    digitalWrite(rightMotorPin2,LOW);      
+    digitalWrite(pin1,HIGH);
+    digitalWrite(pin2,LOW);      
   }
   else
   {
-    digitalWrite(rightMotorPin1,LOW);
-    digitalWrite(rightMotorPin2,LOW);      
+    digitalWrite(pin1,LOW);
+    digitalWrite(pin2,LOW);      
   }
 
   analogWrite(enable, abs(speed));
