@@ -13,14 +13,10 @@ int enableRightMotor=6;
 int rightMotorPin1=7;
 int rightMotorPin2=8;
 
-int rightMotorSpeed=MOTOR_SPEED;
-
 //Left motor
 int enableLeftMotor=5;
 int leftMotorPin1=9;
 int leftMotorPin2=10;
-
-int leftMotorSpeed=MOTOR_SPEED;
 
 
 void setup()
