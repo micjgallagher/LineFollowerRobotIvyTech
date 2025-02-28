@@ -105,19 +105,17 @@ void rotateMotors(int rightMotorSpeed, int leftMotorSpeed)
 
 void rotateMotor(int speed, int pin1, int pin2, int enable)
 {
-    if (DEBUG_PRINT) {
-        if (DEBUG_PRINT_SENTINEL == 0) {
-            Serial.print("Turning motor with pin1 = ");
-            Serial.print(pin1, DEC);
-            Serial.print(" , pin2 = ");
-            Serial.print(pin2, DEC);
-            Serial.print(" , and enable pin = ");
-            Serial.print(enable, DEC);
-            //Serial.print(" (" + (enable == enableLeftMotor) ? "left" : (enable == enableRightMotor) ? "right" : "unknown" + ")"); // Concatenation/Type-Strictness issues, my beloved.
-            Serial.print(" with speed = ");
-            Serial.print(speed, DEC);
-            Serial.println();
-        }
+    if (DEBUG_PRINT && DEBUG_PRINT_SENTINEL == 0) {
+        Serial.print("Turning motor with pin1 = ");
+        Serial.print(pin1, DEC);
+        Serial.print(" , pin2 = ");
+        Serial.print(pin2, DEC);
+        Serial.print(" , and enable pin = ");
+        Serial.print(enable, DEC);
+        //Serial.print(" (" + (enable == enableLeftMotor) ? "left" : (enable == enableRightMotor) ? "right" : "unknown" + ")"); // Concatenation/Type-Strictness issues, my beloved.
+        Serial.print(" with speed = ");
+        Serial.print(speed, DEC);
+        Serial.println();
     }
 
     if (speed < 0)
