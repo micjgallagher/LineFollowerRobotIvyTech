@@ -2,7 +2,7 @@
 #include "Config.h"
 
 // Speeds
-#define MOTOR_SPEED -180 // Reverse sign as needed.
+#define MOTOR_SPEED 180 // Reverse sign as needed.
 
 // Pin Numbers
 #define IR_SENSOR_RIGHT 11
@@ -59,7 +59,8 @@ void loop()
     Serial.print("rightIRSensorValue = ");
     Serial.println(rightIRSensorValue, DEC);
     Serial.print("leftIRSensorValue = ");
-    Serial.println(leftIRSensorValue, DEC);
+    Serial.print(leftIRSensorValue, DEC);
+    Serial.println();
   }
 
   if (DEBUG_MOTORS) {
