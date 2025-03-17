@@ -4,7 +4,7 @@
 int DEBUG_PRINT_SENTINEL=0;
 
 // Speeds
-#define MOTOR_SPEED 180 // Reverse sign as needed.
+#define MOTOR_SPEED 100 // Reverse sign as needed.
 
 // Pin Numbers
 #define IR_SENSOR_RIGHT 11
